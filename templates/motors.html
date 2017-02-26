@@ -1,0 +1,331 @@
+ {% extends 'base.html' %} {%block content%}
+<div class='row'>
+	
+	<div class='span14 offset1'>
+
+
+		<label class='sliderlabel' >Name:</label> <input class='slider input-xlarge' class='span9'  type="text" id="name"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+	</div>
+</div>
+<div class='row'>
+	<div class='span3 offset1'>
+		<label class='sliderlabel' for="kv">Kv:</label> <input class='slider' type="text" id="kv"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-kv"></div>
+
+		<label class='sliderlabel' for="price">Price:</label> <input class='slider'type="text" id="price"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-price"></div>
+
+		<label class='sliderlabel' for="rating">Rating:</label> <input class='slider'type="text" id="rating"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-rating"></div>
+	</div>
+	<div class='span3'>
+		<label class='sliderlabel' for="weight">Weight:</label> <input class='slider' type="text" id="weight"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-weight"></div>
+
+		<label class='sliderlabel' for="maxCurrent">Max. Current:</label> <input class='slider' type="text"
+			id="maxCurrent" style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-maxCurrent"></div>
+
+		<label class='sliderlabel' for="maxVoltage">Max. Voltage:</label> <input  class='slider' type="text"
+			id="maxVoltage" style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-maxVoltage"></div>
+</div>
+	<div class='span3'>
+		<label class='sliderlabel' for="thrust">Max Thrust(found):</label> <input  class='slider' type="text" id="thrust"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-thrust"></div>
+		
+		<label class='sliderlabel' for="power">Power:</label> <input  class='slider' type="text" id="power"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-power"></div>
+		<input type="hidden" value="name" id='sorter' />
+		<input type="hidden" value="1" id='page' />
+	
+
+	<input type="checkbox" id="revert" />	<input type="checkbox" id="showIncomplete" />
+	<label style='margin-top:10px' id="revertstate" for="revert">revert</label><label style='margin-top:10px' id="incompleteState" for="showIncomplete">Show Incomplete itens</label>
+	<p>Reversion is a debug feature, it will show the not-found itens., while  "Show Incomplete itens" shows the itens with missing data</p>
+
+
+
+</div><!-- End demo -->
+		
+		<p></p>
+
+	</div>
+</div>
+
+
+<div id='motors'>
+	<div id='motorsin' class='row'>
+		<strong class='span5 offset5'>{{ amm }}</strong>
+		<!--  pagination -->
+			<div class='span5 offset4'>
+		<div class="pagination">
+			<ul>
+				{% if itens.has_previous %}
+				<li class="prev" page="{{ itens.previous_page_number }}"><a
+					href="#">&larr; Previous</a></li>
+				{% else %}
+				<li class="prev disabled"><a href="#">&larr; Previous</a></li> {%endif %}
+
+				<li class="active"><a> Page {{ itens.number }} of {{itens.paginator.num_pages }}.</a></li> {% if itens.has_next %}
+				<li class="next" page="{{ itens.next_page_number }}"><a href='#'>&rarr;
+						Next</a></li> {% else %}
+				<li class="next disabled"><a href="#">&rarr; Next</a></li> {% endif%}
+			</ul>
+		</div>
+	</div>
+
+<!--  pagination end -->
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Pic </th>
+					<th class='span5'>Name <a href='#'></a><i class="icon-chevron-up" sort='name'></i><i class="icon-chevron-down" sort='-name'></i></a></th>
+					<th>Kv <a href='#'><i class="icon-chevron-up" sort='kv'></i><i class="icon-chevron-down" sort='-kv'></i></a></th>
+					<th>Price <a href='#'><i class="icon-chevron-up" sort='price'></i><i class="icon-chevron-down" sort='-price'></i></a></th>
+					<th>Rating <a href='#'><i class="icon-chevron-up" sort='rating'></i><i class="icon-chevron-down" sort='-rating'></i></a></th>
+					<th>Weight <a href='#'><i class="icon-chevron-up" sort='weight'></i><i class="icon-chevron-down" sort='-weight'></i></a></th>
+					<th>Resistance <a href='#'><i class="icon-chevron-up" sort='resistance'></i><i class="icon-chevron-down" sort='-resistance'></i></a></th>
+					<th>Max A. <a href='#'><i class="icon-chevron-up" sort='maxCurrent'></i><i class="icon-chevron-down" sort='-maxCurrent'></i></a></th>
+					<th>Max Vol. <a href='#'><i class="icon-chevron-up" sort='maxVoltage'></i><i class="icon-chevron-down" sort='-maxVoltage'></i></a></th>
+					<th>Max Thrust <a href='#'><i class="icon-chevron-up" sort='maxThrust'></i><i class="icon-chevron-down" sort='-maxThrust'></i></a></th>
+					<th>Power <a href='#'><i class="icon-chevron-up" sort='power'></i><i class="icon-chevron-down" sort='-power'></i></a></th>
+				</tr>
+			</thead>
+
+
+			{% for i in itens.object_list%}
+			<!-- <div class='span10  pull-left'>{{i.display|safe}}</div> -->
+			{{i.displayLine|safe}} {% endfor %}
+		</table>
+		<div class='row'>
+
+	</div>
+</div>
+
+
+<script>
+				$(function() {
+					$( "#slider-kv" ).slider({
+						range: true,
+						min: 0,
+						max: 14000,
+						values: [ 0, 14000 ],
+						slide: function( event, ui ) {
+							$( "#kv" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#kv" ).val( $( "#slider-kv" ).slider( "values", 0 ) +
+						" - " + $( "#slider-kv" ).slider( "values", 1 ) );
+				});
+				
+				
+				$(function() {
+					$( "#slider-price" ).slider({
+						range: true,
+						min: 0,
+						max: 400,
+						values: [ 0, 400 ],
+						slide: function( event, ui ) {
+							$( "#price" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#price" ).val( $( "#slider-price" ).slider( "values", 0 ) +
+						" - " + $( "#slider-price" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-rating" ).slider({
+						range: true,
+						min: 0,
+						max: 5,
+						values: [ 0, 5 ],
+						slide: function( event, ui ) {
+							$( "#rating" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#rating" ).val( $( "#slider-rating" ).slider( "values", 0 ) +
+						" - " + $( "#slider-rating" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-weight" ).slider({
+						range: true,
+						min: 0,
+						max: 2500,
+						values: [ 0, 2500 ],
+						slide: function( event, ui ) {
+							$( "#weight" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#weight" ).val( $( "#slider-weight" ).slider( "values", 0 ) +
+						" - " + $( "#slider-weight" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-maxCurrent" ).slider({
+						range: true,
+						min: 0,
+						max: 200,
+						values: [ 0, 200 ],
+						slide: function( event, ui ) {
+							$( "#maxCurrent" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#maxCurrent" ).val( $( "#slider-maxCurrent" ).slider( "values", 0 ) +
+						" - " + $( "#slider-maxCurrent" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-maxVoltage" ).slider({
+						range: true,
+						min: 0,
+						max: 100,
+						values: [ 0, 100 ],
+						slide: function( event, ui ) {
+							$( "#maxVoltage" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#maxVoltage" ).val( $( "#slider-maxVoltage" ).slider( "values", 0 ) +
+						" - " + $( "#slider-maxVoltage" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-thrust" ).slider({
+						range: true,
+						min: 0,
+						max: 17000,
+						values: [ 0, 17000 ],
+						slide: function( event, ui ) {
+							$( "#thrust" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#thrust" ).val( $( "#slider-thrust" ).slider( "values", 0 ) +
+						" - " + $( "#slider-thrust" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-power" ).slider({
+						range: true,
+						min: 0,
+						max: 8000,
+						values: [ 0, 8000 ],
+						slide: function( event, ui ) {
+							$( "#power" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#power" ).val( $( "#slider-power" ).slider( "values", 0 ) +
+						" - " + $( "#slider-power" ).slider( "values", 1 ) );
+				});		
+	</script>
+<script>
+	function update() {
+
+		$.post('/loadMotors', {
+			maxKv : $("#slider-kv").slider("option", "values")[1] + 1,
+			minKv : $("#slider-kv").slider("option", "values")[0] - 1,
+			maxPrice : $("#slider-price").slider("option", "values")[1] + 1,
+			minPrice : $("#slider-price").slider("option", "values")[0] - 1,
+			maxRating : $("#slider-rating").slider("option", "values")[1] + 1,
+			minRating : $("#slider-rating").slider("option", "values")[0] - 1,
+			maxWeight : $("#slider-weight").slider("option", "values")[1] + 1,
+			minWeight : $("#slider-weight").slider("option", "values")[0] - 1,
+			maxCur : $("#slider-maxCurrent").slider("option", "values")[1] + 1,
+			minCur : $("#slider-maxCurrent").slider("option", "values")[0] - 1,
+			maxVol : $("#slider-maxVoltage").slider("option", "values")[1] + 1,
+			minVol : $("#slider-maxVoltage").slider("option", "values")[0] - 1,
+			maxPower : $("#slider-power").slider("option", "values")[1] - 1,
+			minPower : $("#slider-power").slider("option", "values")[0] + 1,
+			maxThrust : $("#slider-thrust").slider("option", "values")[1] - 1,
+			minThrust : $("#slider-thrust").slider("option", "values")[0] + 1,
+			revert : $("#revertstate").attr('aria-pressed'),
+			incomplete : $("#incompleteState").attr('aria-pressed'),
+			name : $("#name").val(),
+			sort : $("#sorter").val(),
+			page: $("#page").val(),
+
+			csrfmiddlewaretoken : '{{ csrf_token }}'
+		},
+
+		function setupstuff (data) {
+			var content = $(data).find('#motorsin');
+			// start sorter
+			$("#motors").empty().append(content);
+			$(".icon-chevron-up").click(function(){
+				
+				$('#sorter').val($(this).attr('sort'))
+				$('#page').val(1)
+				update()
+			})
+			$(".icon-chevron-down").click(function(){
+	
+				$('#sorter').val($(this).attr('sort'))
+				$('#page').val(1)
+				update()
+			})
+			//   end sorter
+			//	        start pagination
+			$(".next").click(function() {
+			$('#page').val($(this).attr('page'))
+			update()
+		})
+			$(".prev").click(function() {
+			$('#page').val($(this).attr('page'))
+			update()
+		})  // end pagination
+			$(".motorlink").click(function() {
+				$('#modal-header').text($(this).text())
+				$.post('/motorDesc', {
+					name : $(this).text(),
+					csrfmiddlewaretoken : '{{ csrf_token }}'
+				},
+				function setupstuff (data) {
+					var content = $(data).find('td:first');
+					// start sorter
+					$('.modal-body').empty().append(content);
+					$('#myModal').modal('show')
+					
+				})
+			update()
+		})
+		
+		})
+		
+
+	}
+	function updateReset(){
+		$('#page').val(1)
+		update()
+	}
+	$(".slider").bind("slidestop", updateReset)
+	$("#name").bind('change keyup focusout',updateReset)
+	$("#revert").bind('click',updateReset)
+	$("#showIncomplete").bind('click',updateReset)
+	
+	
+	
+	////////////////////////////////
+	
+	////////////////////////////
+	window.onload=update
+	
+</script>
+	<script>
+	$(function() {
+		$( "#revert" ).button();
+		$( "#showIncomplete" ).button();
+		$( "#format" ).buttonset();
+	});
+	</script>
+
+
+
+
+{% endblock%}

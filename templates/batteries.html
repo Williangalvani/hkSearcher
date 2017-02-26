@@ -1,0 +1,335 @@
+ {% extends 'base.html' %} {%block content%}
+<div class='row'>
+	
+	<div class='span14 offset1'>
+
+
+		<label class='sliderlabel' >Name:</label> <input class='slider input-xlarge' class='span9'  type="text" id="name"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+	</div>
+</div>
+<div class='row'>
+	<div class='span3 offset1'>
+
+		<label class='sliderlabel' for="price">Price:</label> <input class='slider'type="text" id="price"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-price"></div>
+		<label class='sliderlabel' for="rating">Capacity:</label> <input class='slider'type="text" id="capacity"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-capacity"></div>
+
+		<label class='sliderlabel' for="rating">Rating:</label> <input class='slider'type="text" id="rating"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-rating"></div>
+	</div>
+	<div class='span3'>
+
+
+		<label class='sliderlabel' for="height">Height:</label> <input class='slider' type="text"
+			id="height" style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-height"></div>
+
+		<label class='sliderlabel' for="length">Length:</label> <input  class='slider' type="text"
+			id="length" style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-length"></div>
+		<label class='sliderlabel' for="width">Width:</label> <input  class='slider' type="text" id="width"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-width"></div>
+		
+</div>
+	<div class='span3'>
+		<label class='sliderlabel' for="weight">Weight:</label> <input class='slider' type="text" id="weight"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-weight"></div>
+
+		<label class='sliderlabel' for="cells">Cells:</label> <input  class='cells' type="text" id="cells"
+			style="border: 0; color: #f6931f; font-weight: bold;" />
+		<div class='slider' id="slider-cells"></div>
+		<input type="hidden" value="name" id='sorter' />
+		<input type="hidden" value="1" id='page' />
+	
+
+	<input type="checkbox" id="revert" />	<input type="checkbox" id="showIncomplete" />
+	<label style='margin-top:10px' id="revertstate" for="revert">revert</label><label style='margin-top:10px;display:none' id="incompleteState" for="showIncomplete">Show Incomplete itens</label>
+	<p>Reversion is a debug feature, it will show the not-found itens.</p>
+
+
+
+</div><!-- End demo -->
+		
+		<p></p>
+
+	</div>
+</div>
+
+
+<div id='motors'>
+	<div id='motorsin' class='row'>
+		<strong class='span5 offset5'>{{ amm }}</strong>
+		<!--  pagination -->
+			<div class='span5 offset4'>
+		<div class="pagination">
+			<ul>
+				{% if itens.has_previous %}
+				<li class="prev" page="{{ itens.previous_page_number }}"><a
+					href="#">&larr; Previous</a></li>
+				{% else %}
+				<li class="prev disabled"><a href="#">&larr; Previous</a></li> {%endif %}
+
+				<li class="active"><a> Page {{ itens.number }} of {{itens.paginator.num_pages }}.</a></li> {% if itens.has_next %}
+				<li class="next" page="{{ itens.next_page_number }}"><a href='#'>&rarr;
+						Next</a></li> {% else %}
+				<li class="next disabled"><a href="#">&rarr; Next</a></li> {% endif%}
+			</ul>
+		</div>
+	</div>
+
+<!--  pagination end -->
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Pic </th>
+					<th class='span5'>Name <a href='#'></a><i class="icon-chevron-up" sort='name'></i><i class="icon-chevron-down" sort='-name'></i></a></th>
+					<th>Price <a href='#'><i class="icon-chevron-up" sort='price'></i><i class="icon-chevron-down" sort='-price'></i></a></th>
+					<th>Cells <a href='#'><i class="icon-chevron-up" sort='cells'></i><i class="icon-chevron-down" sort='-cells'></i></a></th>
+					<th>Capacity <a href='#'><i class="icon-chevron-up" sort='capacity'></i><i class="icon-chevron-down" sort='-capacity'></i></a></th>
+					<th>Rating <a href='#'><i class="icon-chevron-up" sort='rating'></i><i class="icon-chevron-down" sort='-rating'></i></a></th>
+					<th>Weight <a href='#'><i class="icon-chevron-up" sort='weight'></i><i class="icon-chevron-down" sort='-weight'></i></a></th>
+					<th>Height <a href='#'><i class="icon-chevron-up" sort='heigth'></i><i class="icon-chevron-down" sort='-heigth'></i></a></th>
+					<th>Length <a href='#'><i class="icon-chevron-up" sort='length'></i><i class="icon-chevron-down" sort='-length'></i></a></th>
+					<th>Width <a href='#'><i class="icon-chevron-up" sort='width'></i><i class="icon-chevron-down" sort='-width'></i></a></th>
+					<th>Max C <a href='#'><i class="icon-chevron-up" sort='crating'></i><i class="icon-chevron-down" sort='-crating'></i></a></th>
+					<th>Max Charge C <a href='#'><i class="icon-chevron-up" sort='cchargerating'></i><i class="icon-chevron-down" sort='-cchargerating'></i></a></th>
+				</tr>
+			</thead>
+
+
+			{% for i in itens.object_list%}
+			<!-- <div class='span10  pull-left'>{{i.display|safe}}</div> -->
+			{{i.displayLine|safe}} {% endfor %}
+		</table>
+		<div class='row'>
+
+	</div>
+</div>
+
+
+<script>
+				
+				$(function() {
+					$( "#slider-price" ).slider({
+						range: true,
+						min: 0,
+						max: 250,
+						values: [ 0, 250 ],
+						slide: function( event, ui ) {
+							$( "#price" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#price" ).val( $( "#slider-price" ).slider( "values", 0 ) +
+						" - " + $( "#slider-price" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-capacity" ).slider({
+						range: true,
+						min: 0,
+						max: 13000,
+						values: [ 0, 13000 ],
+						slide: function( event, ui ) {
+							$( "#capacity" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#capacity" ).val( $( "#slider-capacity" ).slider( "values", 0 ) +
+						" - " + $( "#slider-capacity" ).slider( "values", 1 ) );
+				});
+				
+				
+				$(function() {
+					$( "#slider-rating" ).slider({
+						range: true,
+						min: 0,
+						max: 5,
+						values: [ 0, 5 ],
+						slide: function( event, ui ) {
+							$( "#rating" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#rating" ).val( $( "#slider-rating" ).slider( "values", 0 ) +
+						" - " + $( "#slider-rating" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-weight" ).slider({
+						range: true,
+						min: 0,
+						max: 2500,
+						values: [ 0, 2500 ],
+						slide: function( event, ui ) {
+							$( "#weight" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#weight" ).val( $( "#slider-weight" ).slider( "values", 0 ) +
+						" - " + $( "#slider-weight" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-length" ).slider({
+						range: true,
+						min: 0,
+						max: 400,
+						values: [ 0, 400 ],
+						slide: function( event, ui ) {
+							$( "#length" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#length" ).val( $( "#slider-length" ).slider( "values", 0 ) +
+						" - " + $( "#slider-length" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-height" ).slider({
+						range: true,
+						min: 0,
+						max: 100,
+						values: [ 0, 100 ],
+						slide: function( event, ui ) {
+							$( "#height" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#height" ).val( $( "#slider-height" ).slider( "values", 0 ) +
+						" - " + $( "#slider-height" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-width" ).slider({
+						range: true,
+						min: 0,
+						max: 500,
+						values: [ 0, 500 ],
+						slide: function( event, ui ) {
+							$( "#width" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#width" ).val( $( "#slider-width" ).slider( "values", 0 ) +
+						" - " + $( "#slider-width" ).slider( "values", 1 ) );
+				});
+				
+				$(function() {
+					$( "#slider-cells" ).slider({
+						range: true,
+						min: 0,
+						max: 15,
+						values: [ 0, 15 ],
+						slide: function( event, ui ) {
+							$( "#cells" ).val( "" + ui.values[ 0 ] + " - 	" + ui.values[ 1 ] );
+						}
+					});
+					$( "#cells" ).val( $( "#slider-cells" ).slider( "values", 0 ) +
+						" - " + $( "#slider-cells" ).slider( "values", 1 ) );
+				});		
+	</script>
+<script>
+	function update() {
+
+		$.post('/loadBatteries', {
+			maxPrice : $("#slider-price").slider("option", "values")[1] + 1,
+			minPrice : $("#slider-price").slider("option", "values")[0] - 1,
+			maxRating : $("#slider-rating").slider("option", "values")[1] + 1,
+			minRating : $("#slider-rating").slider("option", "values")[0] - 1,
+			maxWeight : $("#slider-weight").slider("option", "values")[1] + 1,
+			minWeight : $("#slider-weight").slider("option", "values")[0] - 1,
+			maxCap : $("#slider-capacity").slider("option", "values")[1] + 1,
+			minCap : $("#slider-capacity").slider("option", "values")[0] - 1,
+			maxHeight : $("#slider-height").slider("option", "values")[1] + 1,
+			minHeight : $("#slider-height").slider("option", "values")[0] - 1,
+			maxLength : $("#slider-length").slider("option", "values")[1] + 1,
+			minLength : $("#slider-length").slider("option", "values")[0] - 1,
+			maxWidth : $("#slider-width").slider("option", "values")[1] + 1,
+			minWidth : $("#slider-width").slider("option", "values")[0] - 1,
+			maxCells : $("#slider-cells").slider("option", "values")[1] + 1,
+			minCells : $("#slider-cells").slider("option", "values")[0] - 1,
+			revert : $("#revertstate").attr('aria-pressed'),
+			incomplete : $("#incompleteState").attr('aria-pressed'),
+			name : $("#name").val(),
+			sort : $("#sorter").val(),
+			page: $("#page").val(),
+
+			csrfmiddlewaretoken : '{{ csrf_token }}'
+		},
+
+		function setupstuff (data) {
+			var content = $(data).find('#motorsin');
+			// start sorter
+			$("#motors").empty().append(content);
+			$(".icon-chevron-up").click(function(){
+				
+				$('#sorter').val($(this).attr('sort'))
+				$('#page').val(1)
+				update()
+			})
+			$(".icon-chevron-down").click(function(){
+	
+				$('#sorter').val($(this).attr('sort'))
+				$('#page').val(1)
+				update()
+			})
+			//   end sorter
+			//	        start pagination
+			$(".next").click(function() {
+			$('#page').val($(this).attr('page'))
+			update()
+		})
+			$(".prev").click(function() {
+			$('#page').val($(this).attr('page'))
+			update()
+		})  // end pagination
+			$(".motorlink").click(function() {
+				$('#modal-header').text($(this).text())
+				$.post('/batDesc', {
+					name : $(this).text(),
+					csrfmiddlewaretoken : '{{ csrf_token }}'
+				},
+				function setupstuff (data) {
+					var content = $(data).find('td:first');
+					// start sorter
+					$('.modal-body').empty().append(content);
+					$('#myModal').modal('show')
+					
+				})
+			update()
+		})
+		
+		})
+		
+
+	}
+	function updateReset(){
+		$('#page').val(1)
+		update()
+	}
+	$(".slider").bind("slidestop", updateReset)
+	$("#name").bind('change keyup focusout',updateReset)
+	$("#revert").bind('click',updateReset)
+	$("#showIncomplete").bind('click',updateReset)
+	
+	
+	
+	////////////////////////////////
+	
+	////////////////////////////
+	window.onload=update
+	
+</script>
+	<script>
+	$(function() {
+		$( "#revert" ).button();
+		$( "#showIncomplete" ).button();
+		$( "#format" ).buttonset();
+	});
+	</script>
+
+
+
+
+{% endblock%}

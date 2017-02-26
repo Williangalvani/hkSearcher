@@ -1,0 +1,75 @@
+
+ <script type="text/javascript">
+ var domainroot="www.das.ufsc.br"
+
+	 function Gsitesearch(curobj){
+	 curobj.q.value="site:"+domainroot+" "+curobj.qfront.value
+	 }
+
+// -->
+</script>
+
+		<div class="topbar-wrapper" style="z-index: 5;">
+	<div id="navbar-example" class="navbar navbar-static">
+            <div class="navbar-inner">
+              <div class="container " style="width: auto;">
+                <a class="brand span2 " href="#"></a>
+                <ul class="nav">
+                <li class=""><a href="/" >Home</a></li>
+                <li class="left"><a href="/department" >Departamento</a></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle " data-toggle="dropdown">Curso <b class="caret"></b></a>
+				              <ul class="dropdown-menu">
+				                <li><a href="/course">Apresentação</a></li>
+				                <li ><a class='external' target='_blank'  title='Projeto Politico Pegagógico' href="http://www.das.ufsc.br/das/graduacao/ppp/index.html">Proj. Pol. Pedagógico <i class="icon-share-alt "></i> </a> </li>
+				             <!--    <li><a href="/course/history">Histórico**</a></li>  -->
+				             	<li><a href="/course/graduated">Formados</a></li>
+					                <li><a target='_blank' href="http://notes.ufsc.br/aplic/RESOCONS.NSF/eab68f213e7101c80325638c005e9041/29c50f204e370fe9032565f5004f9384?OpenDocument&Highlight=2,17">Legislação  <i class="icon-share-alt"></i></a></li>
+				                <li><a target='_blank' href="/course/coordinators">Coordenação</a></li>
+			              </ul>
+                  </li>
+                  <li class="dropdown  ">
+                    <a href="#" class="dropdown-toggle " data-toggle="dropdown">Currículo<b class="caret"></b></a>
+				              <ul class="dropdown-menu">
+                    				<li><a href="/curriculum" >Disciplinas</a></li>
+                    				<li><a href="http://www.cagr.ufsc.br/relatorios/curriculoCurso?curso=220&curriculo=19911" >Download  <i class="icon-download-alt pull-right"></i>	</a> </li>
+                    				<li><a title='Projetos de Fim de Curso' href="/curriculum/pfcs" >PFCs</a></li>
+							  </ul>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Links<b class="caret"></b></a>
+				              <ul class="dropdown-menu">
+									<li><a target='_blank' href="http://autojun.ufsc.br" >Autojun  <i class="icon-share-alt "></i></a></li>
+                    				<li><a target='_blank' href="http://www.das.ufsc.br/~caeca/" >Caeca  <i class="icon-share-alt"></i></a></li>
+                    				<li><a target='_blank' href="http://capg.ufsc.br/" >Capg  <i class="icon-share-alt "></i></a></li>
+                    				<!-- <li><a target='_blank' href="/internshipCoord" >Coord. de Estágios **</a></li> -->
+
+                    				<li><a target='_blank' href="http://cagr.ufsc.br/forum/" >Forum da Graduação  <i class="icon-share-alt "></i></a></li>
+                    				<li><a target='_blank' href="http://moodle.ufsc.br/course/category.php?id=25" >Moodle  <i class="icon-share-alt "></i></a></li>
+							  </ul>
+                  </li>
+                 <li class=""><a href="/faq" >FAQ</a></li>
+	             <li class=""><a href="/contact" >Fale Conosco</a></li>
+
+                 
+                </ul>
+               
+                <ul class="nav ">
+                  <li id="fat-menu" class="dropdown">
+
+                
+                 <form action="http://www.google.com/search" method="get" onSubmit="Gsitesearch(this)">
+<input name="q"  type="hidden" />
+<input name="qfront" class='nobottom' placeholder='Search...' type="text"  style="width: 180px" /> <input style="display:None" type="submit" value="Search" /></p>
+          		</form>
+          		<li><a href="/admin" class=" last">Admin</a></li>
+				</ul>
+              </div>
+            </div>
+          </div>
+
+  </div>
+  
+
+
+		
