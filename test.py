@@ -6,13 +6,13 @@ Created on Nov 9, 2011
 
 # -*- coding: UTF-8 -*-    
 
-from crawler.motor import Motor
-
-from crawler.urlfetcher import parseUrl
-from web.models import Motor
-from hksearcher import settings
-from django.core.management import setup_environ
 import re
+
+from django.core.management import setup_environ
+
+from hksearcher import settings
+from web.models import Motor
+
 setup_environ(settings)
 
 motors = Motor.objects.all()

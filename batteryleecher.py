@@ -6,8 +6,10 @@ Created on Nov 9, 2011
 
 # -*- coding: UTF-8 -*-    
 
-import settings
 from django.core.management import setup_environ
+
+from hksearcher import settings
+
 setup_environ(settings)
 from crawler.battery import Battery
 

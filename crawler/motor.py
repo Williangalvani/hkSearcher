@@ -3,12 +3,11 @@ Created on Feb 24, 2012
 
 @author: Will
 '''
-from urlfetcher import parseUrl
-from hksearcher.web.models import Motor as Motordb
+from web.models import Motor as Motordb
 import re
 import string
-
-from hksearcher.crawler import urlfetcher
+from .urlfetcher import parseUrl
+from datetime import datetime
 
 
 root = 'http://www.hobbyking.com/hobbyking/store/'
@@ -34,6 +33,7 @@ class Motor(object):
     nthrusts = []
     
     def getReviews(self):
+        return ""
         if not self.reviews:
             self.reviews = parseUrl('reviewsSubframe.asp?idproduct=' + self.id + "&more=1")
         return self.reviews
@@ -52,7 +52,7 @@ class Motor(object):
                 if "my" not in i2 and " a " not in i2:
                     s = str(i2).lower()
                     factor = 1
-                    print i
+                    print(i)
                     if "kg" in s:
                         factor = 1000
                     if "oz"in s:
@@ -78,7 +78,7 @@ class Motor(object):
         self.extractThrust(self.description)
         if not self.maxThrust:
             
-            print "trying reviews!"
+            print("trying reviews!")
             self.getReviews()
             self.extractThrust(str(self.reviews))
             if not self.maxThrust:
@@ -114,14 +114,17 @@ class Motor(object):
                     self.maxThrust = None
                 
                 if self.reviews and 'thrust' in self.reviews:
-                    print self.reviews
+                    print(self.reviews)
                     
             
     def addToDb(self):
-  
+            print(self)
             dbmotor = Motordb()
             dbmotor.name = self.name
-            dbmotor.kv = self.kv
+            try:
+                dbmotor.kv = int(float(self.kv))
+            except:
+                dbmotor.kv = None
             dbmotor.price = self.price
             dbmotor.rating = self.rating
             dbmotor.img = self.img
@@ -131,9 +134,11 @@ class Motor(object):
             dbmotor.maxVoltage = self.maxVoltage
             dbmotor.resistance = self.resistance
             dbmotor.power = self.power
-            dbmotor.bigimg =self.bigimg
-            dbmotor.description = self.origdescription
+            dbmotor.bigimg = self.bigimg
+            dbmotor.description = str(self.origdescription)
             dbmotor.maxThrust = self.maxThrust
+            dbmotor.timestamp = datetime.now()
+            print(dbmotor.id)
             dbmotor.save()
             
     
@@ -148,20 +153,24 @@ class Motor(object):
                 kv = string.split("-").pop()
             else:
                 kv = string.split(" ").pop()
-            while(len(kv)>1 and not kv.replace(".","").isdigit()):
+            while len(kv) > 1 and not kv.replace(".","").isdigit():
                 kv = kv[1:]
             return kv
         return None
     
     def getRating(self,i):
-        ratingstring = i.find('td' ,background="images/new07/bgd05.jpg").img['src']
-        return ratingstring.split("/").pop()[0:1]
-    
+        try:
+            ratingstring = i.find('div', class_="rating")['style']
+            rating = int(ratingstring.replace("width:","").replace("%",""))
+            return rating/20
+        except:
+            return None
+
     def extract(self,unit):
         string = self.description.lower().split(unit)[0]
         string = string.replace(" ","")
         string = string.split("a").pop()
-        while(not string.replace(".","").isdigit() and len(string)>0):
+        while not string.replace(".","").isdigit() and len(string)>0:
             string = string[1:]
         if len(string)>0:
             return string
@@ -231,7 +240,7 @@ class Motor(object):
         brushed = re.compile(r'\s?\d+V/\d+.\d+rpm',re.IGNORECASE)
         found = re.findall(cells, self.origdescription)
         if found:
-            print found
+            print(found)
             number = found.pop().split(" ").pop().replace(" ","").lower().replace("s",'')
             while not number.isdigit():
                 number = number[1:]
@@ -240,7 +249,7 @@ class Motor(object):
             
         found = re.findall(voltage, self.origdescription)
         if found:
-            print found
+            print(found)
             number = found.pop().split(" ").pop()[0:-1].replace(" ","")
             while not number.replace(".","").isdigit():
                 number = number[1:]
@@ -249,7 +258,7 @@ class Motor(object):
 
         found = re.findall(brushed, self.origdescription)
         if found:
-            print found
+            print(found)
             #print "brushed!", found
             ##print "trying to get regex data"
             number = found.pop().split("rpm")[0].split("/")[0]
@@ -264,40 +273,42 @@ class Motor(object):
                 return number            
             
     def getExtendedData(self):
-        url = root+ self.page
+        url = self.page
         #print self.name 
 
         soup = parseUrl(url)
         if soup:
-            body = soup.find('table',width="246", border="0", cellspacing="1" ,cellpadding="2")
+            body = soup.find('div', class_="data-table")
         
             if body:
-                rows = body.findAll('tr')
+                rows = body.findAll('li')
                 
                 for row in rows:
-                    tds = row.findAll('td')
-                    attribute = tds[0].text.lower()
-                    value = tds[1].text
+                    attribute = row.find("span").text
+                    value = row.find("div").text
                     if value.replace(".","").isdigit() and float(value)>0:
                         
                         
-                        if 'kv' in attribute:
+                        if 'Kv' in attribute:
                             self.kv = value
-                        elif 'weight' in attribute:
+                        elif 'Weight' in attribute:
                             self.weight = value
-                        elif 'current' in attribute:
+                        elif 'Current' in attribute:
                             self.maxCurrent = float(value)
-                        elif 'resistance' in attribute:
+                        elif 'Resistance' in attribute:
                             self.resistance = value
-                        elif 'voltage' in attribute:
+                        elif 'Voltage' in attribute:
 
                             self.maxVoltage = value
-                        elif 'power' in attribute:
+                        elif 'Power' in attribute:
                             self.power = value
 
-            data = soup.find('table',width='510px').tr.td
-            self.origdescription = str(soup.find('table',width='510px')).replace('src="','src="' + root).replace("src='","src='" + root)
-            self.id = str(soup.find('td',width=103)).split('wsSubframe.asp?idproduct=').pop().split(" ")[0]
+
+            self.origdescription = soup.find("div",class_="product-view")
+            self.description = self.origdescription.find("div", class_="tab-content").text
+            self.id = soup.find("meta", itemprop="sku")["content"][:-2]
+            print(self.id)
+            return
             while not self.id.isdigit() and len(self.id)>0:
                 self.id = self.id[:-1]
             bigimg = data.find('img')['src']
@@ -338,32 +349,33 @@ class Motor(object):
                 self.maxVoltage = int(float(self.power)/float(self.maxCurrent))
 
     def __init__(self,i):
-        self.name = i.find('a' , onmouseout="this.style.color=''").text
+        self.name = i.find('a').text
         query = Motordb.objects.all().filter(name__iexact=self.name)
         if not query or (query and query[0].isIncomplete() ):
-                print 'parsing ' + self.name
+                print('parsing ' + self.name)
                 for j in Motordb.objects.all().filter(name__iexact=self.name):
                     j.delete()
-                self.img = i.find('img',border="1")['src']
+                self.img = i.find('div', class_="product-image").find("img")['src']
                 self.thrusts =[]
                 self.nthrusts =[]
                 self.maxThrust = 0
                 self.kv = self.getKv()
                 self.rating = self.getRating(i)
-                self.page = i.find('a' , onmouseout="this.style.color=''")['href']
-                self.price = float(i.find('font', style="font-size:16px").text[1:-6])
+                self.page = i.find('a')['href']
+                print(self.page)
+                self.price = float(i.find('span', class_="price").text.strip()[1:])
                 self.getExtendedData()
                 self.deduceData()
                 self.getThrust()
-                print 'V = ',self.maxVoltage
-                print 'A = ',self.maxCurrent
-                print 'W = ',self.weight
-                print 'P = ',self.power
-                print 'T = ',self.maxThrust 
+                print('V = ',self.maxVoltage)
+                print('A = ',self.maxCurrent)
+                print('W = ',self.weight)
+                print('P = ',self.power)
+                print('T = ',self.maxThrust)
                 #print self.thrusts
                 self.addToDb()
         else:
-            print "not parsing " + self.name
+            print("not parsing " + self.name)
 
         
         

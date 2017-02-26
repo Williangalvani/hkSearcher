@@ -1,7 +1,8 @@
-from web.models import Motor
-import settings
 from django.core.management import setup_environ
-import re
+
+from hksearcher import settings
+from web.models import Motor
+
 setup_environ(settings)
 
 motors = Motor.objects.all()

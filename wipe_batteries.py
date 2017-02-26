@@ -1,13 +1,15 @@
-import os, sys
+import os
+import sys
+
 path = '/root/hksite/'
 if path not in sys.path:
    sys.path.append(path)
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "hksearcher.settings"
 from web.models import Battery
-import settings
+from hksearcher import settings
 from django.core.management import setup_environ
-import re
+
 setup_environ(settings)
 
 motors = Battery.objects.all()
