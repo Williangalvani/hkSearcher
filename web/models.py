@@ -8,9 +8,6 @@ from django.db import models
 from web import HTML
 import re
 
-root = 'http://www.hobbyking.com/hobbyking/store/'
-
-
 class Motor(models.Model):
     kv = models.IntegerField(null=True, blank=True)
     name = models.CharField(max_length=200)
@@ -161,7 +158,7 @@ class Motor(models.Model):
 
     def displayLine(self):
         table_data = "<tr><td><img style='height:84px;width:115px' src='" + self.img + "'></img>"
-        table_data = table_data + '''</td class='span4'><td><a class='motorlink'  href="#"  link=' ''' + root + self.page + "'>" + self.name + "</a><br><br><br><a target='_blank' href='" + root + self.page + "'>View At HK <i class='icon-share-alt'></i></a>"
+        table_data = table_data + '''</td class='span4'><td><a class='motorlink'  href="#"  link=' ''' + self.page + "'>" + self.name + "</a><br><br><br><a target='_blank' href='"  + self.page + "'>View At HK <i class='icon-share-alt'></i></a>"
         table_data = table_data + "</td><td> " + str(self.kv)
         table_data = table_data + " rpm/v</td><td> USD " + str(self.price)
         table_data = table_data + "</td><td> " + str(self.rating)
@@ -200,8 +197,8 @@ class Battery(models.Model):
     description = models.CharField(max_length=3000)
 
     def displayLine(self):
-        table_data = "<tr><td><img style='height:84px;width:115px' src='" + root + self.img + "'></img>"
-        table_data = table_data + '''</td class='span4'><td><a class='motorlink'  href="#"  link="" ''' + root + self.name + "'>" + self.name + "</a><br><br><br><a target='_blank' href='" + root + self.page + "'>View At HK <i class='icon-share-alt'></i></a>"
+        table_data = "<tr><td><img style='height:84px;width:115px' src='" + self.img + "'></img>"
+        table_data = table_data + '''</td class='span4'><td><a class='motorlink'  href="#"  link="" ''' + self.name + "'>" + self.name + "</a><br><br><br><a target='_blank' href='" + self.page + "'>View At HK <i class='icon-share-alt'></i></a>"
         table_data = table_data + "</td><td> USD " + str(self.price)
         table_data = table_data + "</td><td> " + str(self.cells)
         table_data = table_data + "S</td><td> " + str(self.capacity)

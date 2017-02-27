@@ -287,8 +287,13 @@
 					csrfmiddlewaretoken : '{{ csrf_token }}'
 				},
 				function setupstuff (data) {
-					var content = $(data).find('td:first');
+					var content = $(data).find('div.product-essential');
+					$(content).find("div.add-to-cart-wrapper").remove();
+					$(content).find("button.button").remove();
+					$(content).find("div.rating-sku").remove();
+
 					// start sorter
+                    console.log("batata");
 					$('.modal-body').empty().append(content);
 					$('#myModal').modal('show')
 					

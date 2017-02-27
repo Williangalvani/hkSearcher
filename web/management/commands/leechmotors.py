@@ -67,8 +67,8 @@ class Command(BaseCommand):
                     extract(soup)
             return products
 
-        def getMotors():
-            return getProducts(motors1)
+        def getMotors(links):
+            return getProducts(links)
 
         import re
         MATCH_ALL = r'.*'
@@ -131,4 +131,4 @@ class Command(BaseCommand):
             return links + sublinks
 
         # getPages()
-        getMotors()
+        getMotors(getPages())
