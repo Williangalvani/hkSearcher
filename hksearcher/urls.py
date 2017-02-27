@@ -1,6 +1,7 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.contrib import admin
 from django.views.static import serve
+
 import hksearcher
 from web import views
 

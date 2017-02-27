@@ -4,9 +4,12 @@ Created on Feb 24, 2012
 @author: will
 '''
 
-from django.db import models
-from web import HTML
 import re
+
+from django.db import models
+
+from web import HTML
+
 
 class Motor(models.Model):
     kv = models.IntegerField(null=True, blank=True)
@@ -158,7 +161,7 @@ class Motor(models.Model):
 
     def displayLine(self):
         table_data = "<tr><td><img style='height:84px;width:115px' src='" + self.img + "'></img>"
-        table_data = table_data + '''</td class='span4'><td><a class='motorlink'  href="#"  link=' ''' + self.page + "'>" + self.name + "</a><br><br><br><a target='_blank' href='"  + self.page + "'>View At HK <i class='icon-share-alt'></i></a>"
+        table_data = table_data + '''</td class='span4'><td><a class='motorlink'  href="#"  link=' ''' + self.page + "'>" + self.name + "</a><br><br><br><a target='_blank' href='" + self.page + "'>View At HK <i class='icon-share-alt'></i></a>"
         table_data = table_data + "</td><td> " + str(self.kv)
         table_data = table_data + " rpm/v</td><td> USD " + str(self.price)
         table_data = table_data + "</td><td> " + str(self.rating)

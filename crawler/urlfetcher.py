@@ -3,10 +3,10 @@ Created on Feb 24, 2012
 
 @author: Will
 '''
-from bs4 import BeautifulSoup
-from urllib import request
 import socket
+from urllib import request
 
+from bs4 import BeautifulSoup
 
 
 def parseUrl(url):

@@ -4,11 +4,8 @@ Created on Feb 24, 2012
 @author: Will
 '''
 from urlfetcher import parseUrl
-from hksearcher.web.models import Battery as Batterydb
-import re
-import string
 
-from hksearcher.crawler import urlfetcher
+from hksearcher.web.models import Battery as Batterydb
 
 root = 'http://www.hobbyking.com/hobbyking/store/'
 

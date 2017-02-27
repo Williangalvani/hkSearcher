@@ -7,5 +7,6 @@ setup_environ(settings)
 
 motors = Battery.objects.all()
 for i in motors:
-    print i
+    print
+    i
     i.delete()

@@ -4,9 +4,10 @@ Created on Feb 24, 2012
 @author: will
 '''
 
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, render
-from django.core.paginator import Paginator
+
 from web.models import Motor, Battery
 
 
