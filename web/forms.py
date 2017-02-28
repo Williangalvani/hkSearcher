@@ -16,6 +16,6 @@ class SearchForm(forms.Form):
         ('rating', 'Rating'),
         ('weight', 'Weight'),
         ('resistance', 'Resistance'),
-        ('maxCurrent', 'Max current'),
-        ('maxVoltage', 'Max Voltage'),
+        ('max_current', 'Max current'),
+        ('max_voltage', 'Max Voltage'),
         ('power', 'Power')))

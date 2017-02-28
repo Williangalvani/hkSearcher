@@ -28,15 +28,15 @@
                                                                            style="border: 0; color: #f6931f; font-weight: bold;"/>
             <div class='slider' id="slider-weight"></div>
 
-            <label class='sliderlabel' for="maxCurrent">Max. Current:</label> <input class='slider' type="text"
-                                                                                     id="maxCurrent"
+            <label class='sliderlabel' for="max_current">Max. Current:</label> <input class='slider' type="text"
+                                                                                     id="max_current"
                                                                                      style="border: 0; color: #f6931f; font-weight: bold;"/>
-            <div class='slider' id="slider-maxCurrent"></div>
+            <div class='slider' id="slider-max_current"></div>
 
-            <label class='sliderlabel' for="maxVoltage">Max. Voltage:</label> <input class='slider' type="text"
-                                                                                     id="maxVoltage"
+            <label class='sliderlabel' for="max_voltage">Max. Voltage:</label> <input class='slider' type="text"
+                                                                                     id="max_voltage"
                                                                                      style="border: 0; color: #f6931f; font-weight: bold;"/>
-            <div class='slider' id="slider-maxVoltage"></div>
+            <div class='slider' id="slider-max_voltage"></div>
         </div>
         <div class='span3'>
             <label class='sliderlabel' for="thrust">Max Thrust(found):</label> <input class='slider' type="text"
@@ -108,14 +108,14 @@
                 <th>Resistance <a href='#'><i class="icon-chevron-up" sort='resistance'></i><i class="icon-chevron-down"
                                                                                                sort='-resistance'></i></a>
                 </th>
-                <th>Max A. <a href='#'><i class="icon-chevron-up" sort='maxCurrent'></i><i class="icon-chevron-down"
-                                                                                           sort='-maxCurrent'></i></a>
+                <th>Max A. <a href='#'><i class="icon-chevron-up" sort='max_current'></i><i class="icon-chevron-down"
+                                                                                           sort='-max_current'></i></a>
                 </th>
-                <th>Max Vol. <a href='#'><i class="icon-chevron-up" sort='maxVoltage'></i><i class="icon-chevron-down"
-                                                                                             sort='-maxVoltage'></i></a>
+                <th>Max Vol. <a href='#'><i class="icon-chevron-up" sort='max_voltage'></i><i class="icon-chevron-down"
+                                                                                             sort='-max_voltage'></i></a>
                 </th>
-                <th>Max Thrust <a href='#'><i class="icon-chevron-up" sort='maxThrust'></i><i class="icon-chevron-down"
-                                                                                              sort='-maxThrust'></i></a>
+                <th>Max Thrust <a href='#'><i class="icon-chevron-up" sort='max_thrust'></i><i class="icon-chevron-down"
+                                                                                              sort='-max_thrust'></i></a>
                 </th>
                 <th>Power <a href='#'><i class="icon-chevron-up" sort='power'></i><i class="icon-chevron-down"
                                                                                      sort='-power'></i></a></th>
@@ -125,7 +125,7 @@
 
             {% for i in itens.object_list %}
                 <!-- <div class='span10  pull-left'>{{i.display|safe}}</div> -->
-                {{ i.displayLine|safe }} {% endfor %}
+                {{ i.display_line|safe }} {% endfor %}
         </table>
         <div class='row'>
 
@@ -192,31 +192,31 @@
         });
 
         $(function () {
-            $("#slider-maxCurrent").slider({
+            $("#slider-max_current").slider({
                 range: true,
                 min: 0,
                 max: 200,
                 values: [0, 200],
                 slide: function (event, ui) {
-                    $("#maxCurrent").val("" + ui.values[0] + " - 	" + ui.values[1]);
+                    $("#max_current").val("" + ui.values[0] + " - 	" + ui.values[1]);
                 }
             });
-            $("#maxCurrent").val($("#slider-maxCurrent").slider("values", 0) +
-                " - " + $("#slider-maxCurrent").slider("values", 1));
+            $("#max_current").val($("#slider-max_current").slider("values", 0) +
+                " - " + $("#slider-max_current").slider("values", 1));
         });
 
         $(function () {
-            $("#slider-maxVoltage").slider({
+            $("#slider-max_voltage").slider({
                 range: true,
                 min: 0,
                 max: 100,
                 values: [0, 100],
                 slide: function (event, ui) {
-                    $("#maxVoltage").val("" + ui.values[0] + " - 	" + ui.values[1]);
+                    $("#max_voltage").val("" + ui.values[0] + " - 	" + ui.values[1]);
                 }
             });
-            $("#maxVoltage").val($("#slider-maxVoltage").slider("values", 0) +
-                " - " + $("#slider-maxVoltage").slider("values", 1));
+            $("#max_voltage").val($("#slider-max_voltage").slider("values", 0) +
+                " - " + $("#slider-max_voltage").slider("values", 1));
         });
 
         $(function () {
@@ -259,13 +259,13 @@
                     minRating: $("#slider-rating").slider("option", "values")[0] - 1,
                     maxWeight: $("#slider-weight").slider("option", "values")[1] + 1,
                     minWeight: $("#slider-weight").slider("option", "values")[0] - 1,
-                    maxCur: $("#slider-maxCurrent").slider("option", "values")[1] + 1,
-                    minCur: $("#slider-maxCurrent").slider("option", "values")[0] - 1,
-                    maxVol: $("#slider-maxVoltage").slider("option", "values")[1] + 1,
-                    minVol: $("#slider-maxVoltage").slider("option", "values")[0] - 1,
+                    maxCur: $("#slider-max_current").slider("option", "values")[1] + 1,
+                    minCur: $("#slider-max_current").slider("option", "values")[0] - 1,
+                    maxVol: $("#slider-max_voltage").slider("option", "values")[1] + 1,
+                    minVol: $("#slider-max_voltage").slider("option", "values")[0] - 1,
                     maxPower: $("#slider-power").slider("option", "values")[1] - 1,
                     minPower: $("#slider-power").slider("option", "values")[0] + 1,
-                    maxThrust: $("#slider-thrust").slider("option", "values")[1] - 1,
+                    max_thrust: $("#slider-thrust").slider("option", "values")[1] - 1,
                     minThrust: $("#slider-thrust").slider("option", "values")[0] + 1,
                     revert: $("#revertstate").attr('aria-pressed'),
                     incomplete: $("#incompleteState").attr('aria-pressed'),

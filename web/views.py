@@ -72,48 +72,48 @@ def loadMotors(request):
                               weight__gt=int(request.POST['minWeight']),
                               weight__lt=int(request.POST['maxWeight']), )
 
-        itens = itensp.filter(maxCurrent__lt=int(request.POST['maxCur']),
-                              maxVoltage__lt=int(request.POST['maxVol']),
+        itens = itensp.filter(max_current__lt=int(request.POST['maxCur']),
+                              max_voltage__lt=int(request.POST['maxVol']),
                               power__lt=int(request.POST['maxPower']),
-                              maxThrust__lt=int(request.POST['maxThrust']),
-                              maxCurrent__gt=int(request.POST['minCur']),
-                              maxVoltage__gt=int(request.POST['minVol']),
+                              max_thrust__lt=int(request.POST['max_thrust']),
+                              max_current__gt=int(request.POST['minCur']),
+                              max_voltage__gt=int(request.POST['minVol']),
                               power__gt=int(request.POST['minPower']),
-                              maxThrust__gt=int(request.POST['minThrust'])
+                              max_thrust__gt=int(request.POST['minThrust'])
                               )
 
         if request.POST['incomplete'] == "true":
-            itens = itens | itensp.filter(maxCurrent=None,
-                                          maxVoltage__lt=int(request.POST['maxVol']),
+            itens = itens | itensp.filter(max_current=None,
+                                          max_voltage__lt=int(request.POST['maxVol']),
                                           power__lt=int(request.POST['maxPower']),
-                                          maxThrust__lt=int(request.POST['maxThrust']),
-                                          maxVoltage__gt=int(request.POST['minVol']),
+                                          max_thrust__lt=int(request.POST['max_thrust']),
+                                          max_voltage__gt=int(request.POST['minVol']),
                                           power__gt=int(request.POST['minPower']),
-                                          maxThrust__gt=int(request.POST['minThrust']))
+                                          max_thrust__gt=int(request.POST['minThrust']))
 
-            itens = itens | itensp.filter(maxCurrent__lt=int(request.POST['maxCur']),
-                                          maxVoltage=None,
+            itens = itens | itensp.filter(max_current__lt=int(request.POST['maxCur']),
+                                          max_voltage=None,
                                           power__lt=int(request.POST['maxPower']),
-                                          maxThrust__lt=int(request.POST['maxThrust']),
-                                          maxCurrent__gt=int(request.POST['minCur']),
+                                          max_thrust__lt=int(request.POST['max_thrust']),
+                                          max_current__gt=int(request.POST['minCur']),
                                           power__gt=int(request.POST['minPower']),
-                                          maxThrust__gt=int(request.POST['minThrust']))
+                                          max_thrust__gt=int(request.POST['minThrust']))
 
-            itens = itens | itensp.filter(maxCurrent__lt=int(request.POST['maxCur']),
-                                          maxVoltage__lt=int(request.POST['maxVol']),
+            itens = itens | itensp.filter(max_current__lt=int(request.POST['maxCur']),
+                                          max_voltage__lt=int(request.POST['maxVol']),
                                           power__lt=int(request.POST['maxPower']),
-                                          maxThrust=None,
-                                          maxCurrent__gt=int(request.POST['minCur']),
-                                          maxVoltage__gt=int(request.POST['minVol']),
+                                          max_thrust=None,
+                                          max_current__gt=int(request.POST['minCur']),
+                                          max_voltage__gt=int(request.POST['minVol']),
                                           power__gt=int(request.POST['minPower']))
 
-            itens = itens | itensp.filter(maxCurrent__lt=int(request.POST['maxCur']),
-                                          maxVoltage__lt=int(request.POST['maxVol']),
+            itens = itens | itensp.filter(max_current__lt=int(request.POST['maxCur']),
+                                          max_voltage__lt=int(request.POST['maxVol']),
                                           power=None,
-                                          maxThrust__lt=int(request.POST['maxThrust']),
-                                          maxCurrent__gt=int(request.POST['minCur']),
-                                          maxVoltage__gt=int(request.POST['minVol']),
-                                          maxThrust__gt=int(request.POST['minThrust']))
+                                          max_thrust__lt=int(request.POST['max_thrust']),
+                                          max_current__gt=int(request.POST['minCur']),
+                                          max_voltage__gt=int(request.POST['minVol']),
+                                          max_thrust__gt=int(request.POST['minThrust']))
 
         itens = itens.order_by(request.POST['sort'])
 
